@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MVR Presets</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>MVR Presets</h1>
+    <div id="status" class="status">Connecting…</div>
+    <button id="settings-btn" title="Processor settings">Processor…</button>
+  </header>
+
+  <main>
+    <!-- Preset list -->
+    <section id="presets-section">
+      <div class="section-head">
+        <h2>Presets</h2>
+        <div class="actions">
+          <button id="new-btn" class="primary">+ New preset</button>
+        </div>
+      </div>
+      <div id="presets" class="preset-list"></div>
+    </section>
+
+    <!-- Live view -->
+    <section>
+      <div class="section-head">
+        <h2>Multiviewers now</h2>
+        <div class="actions"><button id="refresh">Refresh</button></div>
+      </div>
+      <div id="mvrs" class="mvr-grid"></div>
+    </section>
+
+    <details>
+      <summary>Processor details (layouts, inputs, screens)</summary>
+      <h3>Layouts</h3>
+      <div id="templates" class="template-grid"></div>
+      <div class="two-col">
+        <div><h3>Inputs</h3><table id="inputs"></table></div>
+        <div><h3>Screens</h3><table id="screens"></table></div>
+      </div>
+    </details>
+  </main>
+
+  <!-- Editor -->
+  <dialog id="editor" class="sheet">
+    <form method="dialog" id="editor-form">
+      <div class="sheet-head">
+        <h2 id="editor-title">New preset</h2>
+        <button type="button" id="editor-close" class="ghost" aria-label="Close">✕</button>
+      </div>
+      <div class="fields">
+        <label>Name <input id="f-name" maxlength="60" placeholder="e.g. Show open" autocomplete="off"></label>
+        <label>Multiviewer <select id="f-mvr"></select></label>
+        <label>Layout <select id="f-layout"></select></label>
+      </div>
+      <p class="hint">Tap a box to choose its source. Boxes left empty are filled by the processor.</p>
+      <div id="editor-canvas" class="canvas editor-canvas"></div>
+      <div id="editor-warnings" class="warnings"></div>
+      <div id="editor-error" class="error" hidden></div>
+      <div class="sheet-foot">
+        <button type="button" id="clear-boxes" class="ghost">Clear all boxes</button>
+        <span class="spacer"></span>
+        <button type="button" id="editor-cancel">Cancel</button>
+        <button type="button" id="editor-save">Save</button>
+        <button type="button" id="editor-save-recall" class="primary">Save &amp; recall</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Source picker -->
+  <dialog id="picker" class="sheet picker">
+    <div class="sheet-head">
+      <h2 id="picker-title">Choose source</h2>
+      <button type="button" id="picker-close" class="ghost" aria-label="Close">✕</button>
+    </div>
+    <div id="picker-list" class="picker-list"></div>
+  </dialog>
+
+  <!-- Settings -->
+  <dialog id="settings" class="sheet small">
+    <div class="sheet-head">
+      <h2>Processor</h2>
+      <button type="button" id="settings-close" class="ghost" aria-label="Close">✕</button>
+    </div>
+    <div class="fields">
+      <label>IP address <input id="s-ip" placeholder="10.0.0.58" inputmode="decimal" autocomplete="off"></label>
+      <label>Port <input id="s-port" placeholder="8088" inputmode="numeric"></label>
+    </div>
+    <p class="hint">Leave the IP empty to use the saved sample files.</p>
+    <p class="hint" id="s-companion"></p>
+    <div id="settings-error" class="error" hidden></div>
+    <div class="sheet-foot">
+      <span class="spacer"></span>
+      <button type="button" id="settings-save" class="primary">Save &amp; connect</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

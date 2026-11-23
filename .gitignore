@@ -1,0 +1,17 @@
+# Secrets and local config
+.env
+
+# Your presets, processor IP, logs, builds
+data/
+logs/
+dist/
+
+# Captured from a real processor (serial number, token) and the vendor manual
+samples/
+*.pdf
+
+# Planning brief (personal details)
+pixelflow-mvr-app-brief.md
+
+node_modules/
+.DS_Store
