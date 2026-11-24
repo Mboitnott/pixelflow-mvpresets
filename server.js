@@ -48,11 +48,20 @@ function sendJson(res, status, body) {
 function readBody(req) {
   return new Promise((resolve, reject) => {
     let data = '';
+    let tooBig = false;
     req.on('data', (chunk) => {
+      if (tooBig) return;
       data += chunk;
-      if (data.length > 1e6) reject(new HttpError(413, 'Request too large'));
+      if (data.length > 1e6) {
+        // Over 1 MB: stop reading, drop the connection, and give up once.
+        tooBig = true;
+        data = '';
+        reject(new HttpError(413, 'Request too large'));
+        req.destroy();
+      }
     });
     req.on('end', () => {
+      if (tooBig) return;
       if (!data) return resolve({});
       try {
         resolve(JSON.parse(data));
@@ -60,7 +69,9 @@ function readBody(req) {
         reject(new HttpError(400, 'Body must be JSON'));
       }
     });
-    req.on('error', reject);
+    req.on('error', (err) => {
+      if (!tooBig) reject(err);
+    });
   });
 }
 
