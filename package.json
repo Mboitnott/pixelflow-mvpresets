@@ -1,6 +1,6 @@
 {
   "name": "pixelflow-mvpresets",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Multiviewer preset builder and Companion trigger for Pixelhue processors",
   "main": "server.js",
